@@ -17,6 +17,8 @@ public class DailyPlanResponse {
   private DailyPlanStatus status;
   private String note;
 
+  private Integer date;
+
   public static DailyPlanResponse from(DailyPlan dailyPlan) {
     DailyPlanResponse response = new DailyPlanResponse();
     response.setId(dailyPlan.getId());
@@ -24,6 +26,7 @@ public class DailyPlanResponse {
     response.setDescription(dailyPlan.getDescription());
     response.setStatus(dailyPlan.getStatus());
     response.setNote(dailyPlan.getNote());
+    response.setDate(dailyPlan.getDate());
     return response;
   }
 }

@@ -42,9 +42,9 @@ public class DailyPlantController {
         return ResponseEntity.status(HttpStatus.OK).body(service.delete(id));
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Void> updateStatus(@PathVariable("id") int id, @RequestBody DailyPlanStatus status) {
-//        final DailyPlan updateStatus = service.updateStatusDailyPlan(id,status);
-//        return ResponseEntity.status(HttpStatus.OK).body(service.updateStatusDailyPlan(id, status));)
-//    }
+    @PutMapping("/{id}/update")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateStatus(@PathVariable("id") int id, @RequestParam("status") DailyPlanStatus status) {
+        service.updateStatusDailyPlan(id, status);
+    }
 }

@@ -7,6 +7,7 @@ import org.aibles.okrbackend.model.DailyPlan;
 import org.aibles.okrbackend.model.DailyPlanStatus;
 import org.aibles.okrbackend.repository.DailyPlantRepository;
 import org.aibles.okrbackend.service.DailyPlantService;
+import org.aibles.okrbackend.utils.DateUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class DailyPlantServiceImpl implements DailyPlantService {
     @Override
     public DailyPlanResponse create(DailyPlantCreateRequest dailyPlantCreateRequest) {
         DailyPlan dailyPlan = dailyPlantCreateRequest.toDailyPlan();
+        dailyPlan.setDate(DateUtils.getCurrentDateInteger());
         dailyPlan = dailyPlantRepository.save(dailyPlan);
         DailyPlanResponse dailyPlanResponse = DailyPlanResponse.from(dailyPlan);
         return dailyPlanResponse;
@@ -41,15 +43,14 @@ public class DailyPlantServiceImpl implements DailyPlantService {
 
     @Override
     public DailyPlanResponse update(int id, DailyPlantCreateRequest dailyPlantCreateRequest) {
-        DailyPlan checkDailyPlan = dailyPlantRepository.findById(id).orElseThrow(DailyPlanNotFoundException::new);
-        DailyPlan dailyPlan = dailyPlantCreateRequest.toDailyPlan();
-        dailyPlan.setDescription(checkDailyPlan.getDescription());
-        dailyPlan.setStatus(checkDailyPlan.getStatus());
-        dailyPlan.setTitle(checkDailyPlan.getTitle());
-        dailyPlan.setNote(checkDailyPlan.getNote());
-        dailyPlan = dailyPlantRepository.save(dailyPlan);
-        return DailyPlanResponse.from(dailyPlan);
+        DailyPlan dailyPlan = dailyPlantRepository.findById(id).orElseThrow(DailyPlanNotFoundException::new);
+        dailyPlan.setDescription(dailyPlantCreateRequest.getDescription());
+        dailyPlan.setStatus(dailyPlantCreateRequest.getStatus());
+        dailyPlan.setTitle(dailyPlantCreateRequest.getTitle());
+        dailyPlan.setNote(dailyPlantCreateRequest.getNote());
+        return DailyPlanResponse.from(dailyPlantRepository.save(dailyPlan));
     }
+
 
     @Override
     public void updateStatusDailyPlan(int id, DailyPlanStatus status) {

@@ -19,14 +19,6 @@ public class DateUtils {
         return getDate(getCurrentDate());
     }
 
-    public static LocalDateTime getCurrentDateTime() {
-        return LocalDateTime.now(ZoneId.of(VI_ZONE));
-    }
-
-    public static String getCurrentDateTimeStr() {
-        return getCurrentDateTime().format(DATE_INTEGER_FORMATTER);
-    }
-
     public static Integer getDate(LocalDate localDate) {
         return Integer.parseInt(DATE_INTEGER_FORMATTER.format(localDate));
     }
